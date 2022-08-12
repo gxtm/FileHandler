@@ -27,34 +27,6 @@ jobs:
     - name: Cache
       uses: actions/cache@v3.0.7
       with:
-        path: /home/runner/.m2/repository
+          path: /home/runner/.m2/repository
 
           key: ${{ runner.os }}-maven-${{ hashFiles(‘**/pom.xml’) }}
-
-          restore-keys: |
-
-              ${{ runner.os }}-maven-
-
-      – name: Setup Java JDK
-
-        uses: actions/setup-java@v1
-
-        with:
-
-    # The Java version to set up. Takes a whole or semver Java version. See examples of supported syntax in the README file
-
-          java-version: 1.8   
-
-      – name: Deploy to CloudHub
-
-        env:
-
-          USERNAME: ${{ secrets.ANYPOINT_USERNAME }}
-
-          PASSWORD: ${{ secrets.ANYPOINT_PASSWORD }}
-
-        run: |
-
-          artifactName=$(ls *.jar | head -1)
-
-          mvn mule:deploy -Dmule.artifact=$artifactName -Danypoint.userName=$USERNAME -Danypoint.password=$PASSWORD -Danypoint.env=”Sandbox” -Danypoint.appName=”DEMO-WORK-1″
